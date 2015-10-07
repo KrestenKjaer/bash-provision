@@ -22,7 +22,7 @@ case $action in
     echo "$(bake dpkg --get-selections)" | grep -E "^$name\\s+install$"
     [ "$?" -gt 0 ] && return $STATUS_MISSING
 
-    outdated=$(bake sudo apt-get -u update --dry-run \
+    outdated=$(bake sudo apt-get -s upgrade  \
                 | grep "^Inst" | awk '{print $2}')
     $(str_contains "$outdated" "$name")
     [ "$?" -eq 0 ] && return $STATUS_OUTDATED
